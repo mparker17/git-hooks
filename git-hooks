@@ -49,6 +49,7 @@ function list_hooks_in_dir
 {
     path="${1}"
     level="${2}"
+    GREP_OPTIONS=""
     find --help 2>&1 | grep -- '-L' 2>/dev/null >/dev/null
     if [ $? -eq 1 ] ; then
         find "${path}/" -mindepth ${level} -maxdepth ${level} -perm +111 -type f 2>/dev/null | grep -v "^.$" | sort
@@ -60,6 +61,7 @@ function list_hooks_in_dir
 function list_hooks
 {
     GITDIR=`git rev-parse --git-dir`
+    GREP_OPTIONS=""
     cat "${GITDIR}/hooks/pre-commit" 2> /dev/null | grep 'git-hooks' > /dev/null 2> /dev/null
     if [ $? = 0 ] ; then
         echo "Git hooks ARE installed in this repository."
